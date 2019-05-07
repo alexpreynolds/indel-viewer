@@ -46,5 +46,8 @@
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile"
+  },
+  "dependencies": {
+    "reactstrap": "^8.0.0"
   }
 }

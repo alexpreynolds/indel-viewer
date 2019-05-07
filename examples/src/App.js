@@ -1,6 +1,11 @@
 import React from 'react';
-import IndelRelativeFrequencyViewer from '../../src';
 import SplitPane from 'react-split-pane';
+import { CardBody, CardTitle, CardText, Card, Form, FormGroup, Input } from 'reactstrap';
+
+// Application constants
+import * as Constants from "./Constants.js";
+
+import IndelRelativeFrequencyViewer from '../../src';
 
 class App extends React.Component {
   
@@ -13,6 +18,7 @@ class App extends React.Component {
       viewerHeight: 0,
       viewerWidth: 0,
       viewerBorderWidth: 1,
+      indels: Constants.defaultIndelObj
     };
   }
   
@@ -26,8 +32,6 @@ class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateViewportDimensions);
   }
-  
-  
   
   updateViewportDimensions = () => {
     let leftPaneWidth = parseInt(document.getElementById("demo-viewer-left-pane").offsetWidth) + "px"
@@ -50,6 +54,22 @@ class App extends React.Component {
         <div className="demo-viewer-container">
           <SplitPane defaultSize={400} minSize={300} maxSize={400} split="vertical" primary="first" onDragFinished={()=>{this.updateViewportDimensions()}}>
             <div className="App-pane App-leftPane" id="demo-viewer-left-pane">
+              <div className="demo-view-settings">
+                <Card>
+                  <CardBody>
+                    <CardTitle>
+                      Indel data object
+                    </CardTitle>
+                    <CardText>
+                      <Form>
+                        <FormGroup>
+                          <Input className="demo-view-settings-textarea" type="textarea" name="text" id="exampleText" value={JSON.stringify(this.state.indels, null, 2)} />
+                        </FormGroup>
+                      </Form>
+                    </CardText>
+                  </CardBody>
+                </Card>
+              </div>
             </div>
             <div className="App-pane App-rightPane">
               <IndelRelativeFrequencyViewer
