@@ -1,5 +1,6 @@
 import React from 'react';
 import IndelRelativeFrequencyViewer from '../../src';
+import SplitPane from 'react-split-pane';
 
 class App extends React.Component {
   
@@ -11,6 +12,7 @@ class App extends React.Component {
       windowWidth: 0,
       viewerHeight: 0,
       viewerWidth: 0,
+      viewerBorderWidth: 1,
     };
   }
   
@@ -25,11 +27,14 @@ class App extends React.Component {
     window.removeEventListener("resize", this.updateViewportDimensions);
   }
   
+  
+  
   updateViewportDimensions = () => {
+    let leftPaneWidth = parseInt(document.getElementById("demo-viewer-left-pane").offsetWidth) + "px"
     let windowInnerHeight = window.innerHeight + "px";
     let windowInnerWidth = window.innerWidth + "px";
-    let viewerHeight = windowInnerHeight;
-    let viewerWidth = windowInnerWidth;
+    let viewerHeight = (parseInt(windowInnerHeight) - 2*(this.state.viewerBorderWidth)) + "px";
+    let viewerWidth = (parseInt(windowInnerWidth) - parseInt(leftPaneWidth) - 2*(this.state.viewerBorderWidth)) + "px";
     this.setState({
       windowHeight: windowInnerHeight,
       windowWidth: windowInnerWidth,
@@ -41,12 +46,19 @@ class App extends React.Component {
   
   render() {
     return (
-      <div className="demo-parent-container">
-        <div className="demo-viewer-parent-container">
-          <IndelRelativeFrequencyViewer
-            viewerTitle={this.state.viewerTitle}
-            viewerHeight={this.state.viewerHeight}
-            viewerWidth={this.state.viewerWidth} />
+      <div className="demo-viewer-parent">
+        <div className="demo-viewer-container">
+          <SplitPane defaultSize={400} minSize={300} maxSize={400} split="vertical" primary="first" onDragFinished={()=>{this.updateViewportDimensions()}}>
+            <div className="App-pane App-leftPane" id="demo-viewer-left-pane">
+            </div>
+            <div className="App-pane App-rightPane">
+              <IndelRelativeFrequencyViewer
+                viewerTitle={this.state.viewerTitle}
+                viewerHeight={this.state.viewerHeight}
+                viewerWidth={this.state.viewerWidth}
+                viewerBorderWidth={this.state.viewerBorderWidth} />
+            </div>
+          </SplitPane>
         </div>
       </div>
     );

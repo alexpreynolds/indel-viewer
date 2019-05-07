@@ -33,7 +33,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-select": "^1.2.1",
-    "react-split-pane": "^0.1.81",
+    "react-split-pane": "^0.1.87",
     "react-textarea-autosize": "^6.1.0",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",

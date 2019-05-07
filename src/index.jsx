@@ -6,10 +6,15 @@ class IndelRelativeFrequencyViewer extends React.Component {
     super(props);
     this.state = {
       indels :                     this.props.indels || null,
-      viewerTitle :                "Default",
+      viewerTitle :                "No title",
       viewerTitleColor :           "rgba(0, 0, 0, 0.95)",
       viewerTitleFontWeight :      "600",
       viewerTitleFontSize :        "1.4em",
+      viewerTitleTextAlign:        "center",
+      containerBorderWidth:        "1px",
+      containerBorderColor:        "rgba(0, 0, 0, 0.15)",
+      containerBorderStyle:        "solid",
+      containerBoxSizing:          "content-box",
       containerWidth :             800,
       containerHeight :            600,
       containerMargin :            {
@@ -25,8 +30,8 @@ class IndelRelativeFrequencyViewer extends React.Component {
         left: 15
       },
       containerBackgroundColor :   "rgba(0, 0, 0, 0.05)",
-      yAxisLabel :                 "Y-axis label",
-      xAxisLabel :                 "X-axis label"
+      yAxisLabel :                 "No y-axis label",
+      xAxisLabel :                 "No x-axis label"
     }
   }
   
@@ -38,6 +43,10 @@ class IndelRelativeFrequencyViewer extends React.Component {
         width: correctedWidth,
         height: correctedHeight,
         backgroundColor: this.props.viewerBackgroundColor || this.state.containerBackgroundColor, 
+        borderWidth: this.props.viewerBorderWidth || this.state.containerBorderWidth,
+        borderColor: this.props.viewerBorderColor || this.state.containerBorderColor,
+        borderStyle: this.props.viewerBorderStyle || this.state.containerBorderStyle,
+        boxSizing: this.props.viewerBoxSizing || this.state.containerBoxSizing,
         marginTop: (this.props.viewerMargin && this.props.viewerMargin.top) || this.state.containerMargin.top, 
         marginBottom: (this.props.viewerMargin && this.props.viewerMargin.bottom) || this.state.containerMargin.bottom, 
         marginLeft: (this.props.viewerMargin && this.props.viewerMargin.left) || this.state.containerMargin.left, 
@@ -47,6 +56,7 @@ class IndelRelativeFrequencyViewer extends React.Component {
         paddingLeft: (this.props.viewerPadding && this.props.viewerPadding.left) || this.state.containerPadding.left, 
         paddingRight: (this.props.viewerPadding && this.props.viewerPadding.right) || this.state.containerPadding.right}}>
         <div id="irf-container-title" style={{
+          textAlign: this.props.viewerTitleTextAlign || this.state.viewerTitleTextAlign,
           fontSize: this.props.viewerTitleFontSize || this.state.viewerTitleFontSize,
           fontWeight: this.props.viewerTitleFontWeight || this.state.viewerTitleFontWeight,
           color: this.props.viewerTitleColor || this.state.viewerTitleColor,
