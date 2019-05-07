@@ -5,7 +5,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   filename: "./index.html"
 });
 module.exports = {
-  entry: path.join(__dirname, "examples/src/index.js"),
+  entry: path.join(__dirname, "examples/src/index.jsx"),
   module: {
     rules: [
       {
@@ -28,6 +28,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx']
   },
   devServer: {
-    port: 8080
+    port: 8080,
+    public: '13.58.33.23:8000'
   }
 };
