@@ -1,0 +1,17 @@
+{ 
+  apps : [
+    {
+      name: "indel-relative-frequency-viewer demo (development)",
+      script: "nodemon --exec npm run start",
+      interpreter: "none",
+      watch: false,
+      cwd: "/home/ubuntu/indel-relative-frequency-viewer",
+      env: {
+        "DEBUG": "indel-relative-frequency-viewer:*",
+        "PORT": 8080,
+        "NODE_ENV": "development",
+        "HOST": "ip-172-31-25-47.us-east-2.compute.internal"
+      }
+    }
+  ]
+}

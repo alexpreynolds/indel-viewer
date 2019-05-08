@@ -1,12 +1,13 @@
 import React from 'react';
 import * as d3 from 'd3';
+import './IndelRelativeFrequencyViewer.css';
 
 class IndelRelativeFrequencyViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       indels :                     this.props.indels || null,
-      viewerTitle :                "No title",
+      viewerTitle :                "",
       viewerTitleColor :           "rgba(0, 0, 0, 0.95)",
       viewerTitleFontWeight :      "600",
       viewerTitleFontSize :        "1.4em",
@@ -31,8 +32,16 @@ class IndelRelativeFrequencyViewer extends React.Component {
       },
       containerBackgroundColor :   "rgba(0, 0, 0, 0.05)",
       yAxisLabel :                 "No y-axis label",
-      xAxisLabel :                 "No x-axis label"
+      xAxisLabel :                 "No x-axis label",
+      dataColors:                  {
+        'NHEJ' : { r:   '0', g:   '0', b:   '0', a:   '1' },
+        'MMEJ' : { r:   '0', g: '139', b:   '2', a:   '1' },
+      }
     }
+  }
+  
+  componentDidUpdate() {
+    console.log("componentDidUpdate()");
   }
   
   render() {
@@ -55,13 +64,13 @@ class IndelRelativeFrequencyViewer extends React.Component {
         paddingBottom: (this.props.viewerPadding && this.props.viewerPadding.bottom) || this.state.containerPadding.bottom, 
         paddingLeft: (this.props.viewerPadding && this.props.viewerPadding.left) || this.state.containerPadding.left, 
         paddingRight: (this.props.viewerPadding && this.props.viewerPadding.right) || this.state.containerPadding.right}}>
-        <div id="irf-container-title" style={{
+        <div id="irf-container-title" className="irf-container-title" style={{
           textAlign: this.props.viewerTitleTextAlign || this.state.viewerTitleTextAlign,
           fontSize: this.props.viewerTitleFontSize || this.state.viewerTitleFontSize,
           fontWeight: this.props.viewerTitleFontWeight || this.state.viewerTitleFontWeight,
           color: this.props.viewerTitleColor || this.state.viewerTitleColor,
         }}>
-          {this.props.viewerTitle || this.state.viewerTitle}
+          {this.props.viewerTitle || this.props.indels.sample}
         </div>
       </div>
     );

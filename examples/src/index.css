@@ -10,6 +10,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
 .demo-view-settings {
   margin: 15px;
 }
@@ -32,6 +39,28 @@ code {
 
 .card-text {
   margin: 0;
+}
+
+.card-text-warning {
+  color: red;
+  font-weight: 200;
+  font-size: smaller;
+  margin-top: 10px;
+}
+
+.card-text-warning:empty {
+  display: none;
+}
+
+.card-swatch, .card-swatch-label {
+  display: inline;
+}
+
+.card-swatch-label {
+  font-size: 0.9em;
+  position: relative;
+  top: -5px;
+  padding-left: 4px;
 }
 
 .Resizer {
