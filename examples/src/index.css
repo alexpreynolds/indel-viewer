@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
 body {
   margin: 0px;
   padding: 0px;
@@ -7,7 +9,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: "Source Code Pro", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 input:focus,
@@ -24,12 +26,18 @@ button:focus {
 .demo-view-settings-textarea {
   width: calc(100% - 5px) !important;
   height: 200px !important;
+  font-family: "Source Code Pro", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 0.7em !important;
 }
 
 .card {
   background-color: rgba(0, 0, 0, 0.05);
   border: 1px solid rgba(0, 0, 0, 0.15);
   padding: 15px;
+}
+
+.card-body {
+  padding: unset !important;
 }
 
 .card-title {

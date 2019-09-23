@@ -1,3 +1,42 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
 .irf-container-title:empty {
   display: none
+}
+
+.irf-container-title {
+  padding-bottom: 20px;
+}
+
+.irf-plot-container {
+  overflow: scroll;
+  border: 1px solid #bbb;
+  cursor: grab;
+}
+
+.irf-plot-svg {
+  background-color: white;
+}
+
+.placeholder {
+  visibility: visible;
+}
+
+svg text {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+svg .cell-text {
+  font-family: "Source Code Pro", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+svg .read-block-I {
+  cursor: pointer;
+}
+
+svg .cell-match-substitution {
+  cursor: pointer;
 }

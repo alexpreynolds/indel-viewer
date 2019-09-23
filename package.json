@@ -48,6 +48,9 @@
     "prepublishOnly": "npm run transpile"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jsonpath": "^1.0.2",
+    "lodash": "^4.17.15",
     "react-color": "^2.17.3",
     "reactcss": "^1.2.3",
     "reactstrap": "^8.0.0"

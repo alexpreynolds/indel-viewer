@@ -9,6 +9,8 @@ import * as Constants from "./Constants.js";
 
 import IndelRelativeFrequencyViewer from '../../src';
 
+const jp = require('jsonpath');
+
 class App extends React.Component {
   
   constructor(props) {
@@ -22,15 +24,18 @@ class App extends React.Component {
       viewerBorderWidth: 1,
       indelsAsObj: Constants.defaultIndelObj,
       indelsAsStr: JSON.stringify(Constants.defaultIndelObj, null, 2),
+      indelsAmplicons: [],
+      indelsSelectedAmplicon: "",
       indelsMsg: "",
+      indelsPlotId: "indelsSVGPlot",
       displayColorPickers: {
         'NHEJ' : false,
         'MMEJ' : false
       },
       colors: {
-        'NHEJ' : { r: '0', g: '0', b: '0', a: '1' },
-        'MMEJ' : { r: '0', g: '139', b: '2', a: '1' },
-      }
+        'NHEJ' : { r:  '68', g:   '1', b:  '84', a: '1' },
+        'MMEJ' : { r: '253', g: '231', b:  '37', a: '1' },
+      },
     };
   }
   
@@ -39,6 +44,12 @@ class App extends React.Component {
       this.updateViewportDimensions();
     }, 100);
     window.addEventListener("resize", this.updateViewportDimensions);
+    let amplicons = Object.keys(this.state.indelsAsObj.amplicons);
+    let selectedAmplicon = amplicons[0] || Constants.noAmpliconSelectedText;
+    this.setState({
+      indelsAmplicons: amplicons,
+      indelsSelectedAmplicon: selectedAmplicon
+    });
   }
 
   componentWillUnmount() {
@@ -69,7 +80,7 @@ class App extends React.Component {
           this.setState({
             indelsAsObj: indelsAsObj,
             indelsMsg: ""
-          }, () => { console.log(this.state.indelsAsObj) });
+          }, () => { });
         }
         catch(err) {
           this.setState({
@@ -96,13 +107,24 @@ class App extends React.Component {
     this.setState({ displayColorPickers: dcp });
   };
 
-  handleChange = (color, name) => {
+  handleColorChange = (color, name) => {
     console.log('color', color);
     console.log('name', name);
     let cs = {...this.state.colors};
     cs[name] = color.rgb;
     this.setState({ colors: cs }, ()=>{ /* this.handleClose(null, name) */ });
   };
+  
+  makeOptions = (d, i) => {
+    return <option key={`${d}-${i}`}>{d}</option>
+  }
+  
+  handleSelectChange = (event) => {
+    console.log(event.target.name, event.target.value);
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
   
   render() {
     
@@ -174,10 +196,32 @@ class App extends React.Component {
                 
                 <Card style={{marginTop:'15px'}}>
                   <CardBody>
+                    
                     <CardTitle>
                       Display parameters
                     </CardTitle>
+                    
                     <div className="card-text">
+                    
+                      <Card style={{marginBottom:"10px"}}>
+                        <CardBody>
+                          <CardTitle>
+                            Amplicon
+                          </CardTitle>
+                          <div className="card-text">
+                          
+                            <Form>
+                              <FormGroup>
+                                <Input type="select" name="indelsSelectedAmplicon" value={this.state.indelsSelectedAmplicon} onChange={this.handleSelectChange}>
+                                  {this.state.indelsAmplicons.map(this.makeOptions)}
+                                </Input>
+                              </FormGroup>
+                            </Form>
+                          
+                          </div>
+                        </CardBody>
+                      </Card>
+                    
                       <Card>
                         <CardBody>
                           <CardTitle>
@@ -197,7 +241,7 @@ class App extends React.Component {
                             </div>
                             { this.state.displayColorPickers.MMEJ ? <div style={ pickerStyles.popover }>
                               <div style={ pickerStyles.cover } name='MMEJ' onClick={(e)=>this.handleClose(e,'MMEJ')}/>
-                              <SketchPicker color={ this.state.colors.MMEJ } name='MMEJ' onChangeComplete={(c)=>this.handleChange(c,'MMEJ')} />
+                              <SketchPicker color={ this.state.colors.MMEJ } name='MMEJ' onChangeComplete={(c)=>this.handleColorChange(c,'MMEJ')} />
                             </div> : null }
                             
                             <div className="card-swatch-container">
@@ -212,13 +256,14 @@ class App extends React.Component {
                             </div>
                             { this.state.displayColorPickers.NHEJ ? <div style={ pickerStyles.popover }>
                               <div style={ pickerStyles.cover } name='NHEJ' onClick={(e)=>this.handleClose(e,'NHEJ')}/>
-                              <SketchPicker color={ this.state.colors.NHEJ } name='NHEJ' onChangeComplete={(c)=>this.handleChange(c,'NHEJ')} />
+                              <SketchPicker color={ this.state.colors.NHEJ } name='NHEJ' onChangeComplete={(c)=>this.handleColorChange(c,'NHEJ')} />
                             </div> : null }
                             
                           </div>
                         </CardBody>
                       </Card>
                     </div>
+                    
                   </CardBody>
                 </Card>
 
@@ -227,6 +272,8 @@ class App extends React.Component {
             <div className="App-pane App-rightPane">
               <IndelRelativeFrequencyViewer
                 indels={this.state.indelsAsObj}
+                indelsSelectedAmplicon={this.state.indelsSelectedAmplicon}
+                indelsPlotId={this.state.indelsPlotId}
                 viewerHeight={this.state.viewerHeight}
                 viewerWidth={this.state.viewerWidth}
                 viewerBorderWidth={this.state.viewerBorderWidth}
